@@ -25,7 +25,7 @@ It will:
 * Ruby, obviously. This was developed with 2.1.5, but *should* work with any post-2.0 release.
 * RubyGems, for the `gem` command.
 
-It installs the `thor` Gem if it's not already on your system. (If you can build a Rails application, you have `thor` installed.)
+It installs the `thor` Gem if it's not already on your system. (If you can build a Rails application, you have `thor` installed.) The only other Gem depended on at runtime is the [`github_api`](http://peter-murach.github.io/github/) Gem.
 
 See the `ruby_app_up.gemspec` file for Gems used in development.
 
@@ -36,6 +36,18 @@ Install this app via Rubygems:
 ```
 $ gem install ruby_app_up
 ```
+
+## Configuration
+
+`ruby_app_up` can *optionally* use your GitHub credentials via OAuth2. To use this, first go to the [Applications tab on your GitHub Personal Settings page](https://github.com/settings/applications) and click the [Generate new token](https://github.com/settings/tokens/new) button next to `Personal access tokens`. (You'll be asked to verify your password if you haven't done so recently enough.) Enter a "Token Description", and make sure the boxes for `repo`, `public_repo` and `user` are ticked. Then click the green "Generate Token" button. You'll go back to the "Personal Settings" page, and the new token (a 40-character hexadecimal string) will be highlighted. **KEEP A SAFE RECORD OF THAT NUMBER**; you can't see it again once you leave or refresh the page.
+
+Then, in your Terminal window, set the `OAUTH_TOKEN` environment variable to the token you copied from the GitHub Web page:
+
+```
+$ export OAUTH_TOKEN=1234567890abcdef1234567890abcdef90abcdef
+```
+
+(using your real value, of course). This should let you access your or your organisation's private repos as well as public ones using `ruby_app_up`.
 
 ## Usage
 

@@ -6,8 +6,8 @@ describe RubyAppUp do
     expect(RubyAppUp::VERSION).not_to be nil
   end
 
-  it 'does nothing useful yet' do
-    puts '***** FIXME!'.light_red + ' Add specs!'
-    expect(true).to eq(true)
-  end
+  # it 'does nothing useful yet' do
+  #   puts '***** FIXME!'.light_red + ' Add specs!'
+  #   expect(true).to eq(true)
+  # end
 end
