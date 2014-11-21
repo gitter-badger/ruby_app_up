@@ -1,6 +1,8 @@
 # `ruby_app_up`
 
 [ ![Codeship Status for jdickey/ruby_app_up](https://codeship.com/projects/ce8a39d0-536d-0132-1cc6-5e1d8dbac3c9/status)](https://codeship.com/projects/48939)
+[![Code Climate](https://codeclimate.com/github/jdickey/ruby_app_up/badges/gpa.svg)](https://codeclimate.com/github/jdickey/ruby_app_up)
+[![security](https://hakiri.io/github/jdickey/ruby_app_up/master.svg)](https://hakiri.io/github/jdickey/ruby_app_up/master)
 
 `ruby_app_up` is a tool for repeatably setting up an existing Github-based Ruby
 (and incidentally Rails) repo for development on a local system. It is a command
