@@ -1,6 +1,5 @@
 
 require 'spec_helper'
-require 'colorize'
 
 require 'ruby_app_up/description_maker'
 
