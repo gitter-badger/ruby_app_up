@@ -1,6 +1,5 @@
 
 require 'github_api'
-require 'pry'
 
 # Module containing our Gem's logic.
 module RubyAppUp

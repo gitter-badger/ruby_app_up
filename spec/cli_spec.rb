@@ -1,14 +1,30 @@
 
 require 'spec_helper'
-require 'stringio'
-require 'awesome_print'
 require 'pry'
 
 require 'ruby_app_up/cli'
+require 'ruby_app_up/colour_scheme'
+
+def regexp_safe_for_colour(coloured, base)
+  offset = coloured.index base
+  ret = '.' * offset
+  ret += base
+  ret + '.' * (coloured.length - ret.length)
+end
+
+def match_for_possibly_coloured_str(actual, text)
+  if text.nil? || text == actual
+    actual
+  else
+    regexp_safe_for_colour actual, text
+  end
+end
 
 # Module containing our Gem's logic.
 module RubyAppUp
   describe CLI do
+    let(:colours) { ColourScheme.new }
+
     describe :help.to_s do
       context 'with no parameters' do
         it 'outputs the correct general help text' do
@@ -25,8 +41,10 @@ module RubyAppUp
 
       context 'with the parameter "init"' do
         it 'outputs the correct help text for the "init" command' do
+          part = 'init REPO_URL'
+          part = regexp_safe_for_colour(colours.command(part), part)
           expected_str = "Usage:\n  rspec init REPO_URL\n\n" \
-            "Description:\n  init REPO_URL will\n.+$"
+            "Description:\n  #{part} will\n.+$"
           expected = Regexp.new expected_str, Regexp::MULTILINE
           expect { CLI.new.help 'init' }.to output(expected).to_stdout
         end
@@ -53,14 +71,20 @@ module RubyAppUp
     describe :init.to_s do
       context 'with a repo specifier that is invalid because it' do
         after :each do
-          expect { CLI.new.init @param }.to raise_error @error, @message
+          begin
+            CLI.new.init @param
+          rescue @error => e
+            match_str = match_for_possibly_coloured_str @message, @text
+            expect(e.message).to match match_str
+          end
         end
 
         context 'has an invalid format' do
           it 'outputs the correct error message' do
             @error = Thor::MalformattedArgumentError
-            @message = 'ERROR: Repository must be specified in login_name/' \
-              'repository_name format!'.light_red
+            @text = 'ERROR: Repository must be specified in login_name/' \
+              'repository_name format!'
+            @message = colours.alert @text
             @param = 'whatever'
           end
         end # context 'has an invalid format'

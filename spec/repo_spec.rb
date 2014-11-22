@@ -1,6 +1,5 @@
 
 require 'spec_helper'
-require 'pry'
 
 require 'ruby_app_up/repo'
 

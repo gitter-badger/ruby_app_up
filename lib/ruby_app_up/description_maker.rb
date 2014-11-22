@@ -1,12 +1,15 @@
 
-# require 'colorize'
+require_relative 'colour_scheme'
 
 module RubyAppUp
-  # Create text for Gem's `long_desc` string.
+  # Create text for Thor's `long_desc` string.
   class DescriptionMaker
     def long_description
-      # 'init REPO_URL'.light_green + " will\x5" + massage_ld_lines.join("\x5")
-      "init REPO_URL will\x5" + massage_ld_lines.join("\x5")
+      @colours = ColourScheme.new
+      separator = "\x5"
+
+      @colours.command('init REPO_URL') + ' will' + separator +
+        massage_ld_lines.join(separator)
     end
 
     private
@@ -38,23 +41,19 @@ module RubyAppUp
 
     def ld_gsub_patterns
       {
-        'EVE ' => 'EVENTUALLY ', # .light_magenta,
-        # ' MUST ' => ' MUST '.light_red,
-        # /`(.+?)`/ => '\1'.light_yellow
+        'EVE ' => @colours.future('EVENTUALLY '),
+        ' MUST ' => @colours.alert(' MUST '),
+        /`(.+?)`/ => @colours.mono('\1')
       }
     end
 
-    # NOTE: Colorize (as of 0.7.3) scrambles output of a long string w/several
-    #       embedded colour changes. If and when that Gem is fixed, remove the
-    #       call to `current.uncolorize` on the last line of this method's inner
-    #       block.
     def massage_ld_lines
       all_ld_lines.collect do |line|
         current = '* ' + line
         ld_gsub_patterns.each do |pattern, replacement|
           current = current.gsub pattern, replacement
         end
-        current # .uncolorize
+        current
       end
     end
   end # class RubyAppUp::DescriptionMaker

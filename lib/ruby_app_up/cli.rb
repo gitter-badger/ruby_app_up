@@ -1,8 +1,9 @@
 
 require 'thor'
-require 'colorize'
+require 'pastel'
 
 require_relative 'description_maker'
+require_relative 'repo'
 
 # Module containing our Gem's logic.
 module RubyAppUp
@@ -28,8 +29,9 @@ module RubyAppUp
     end
 
     def repo_spec_error
-      %w(ERROR: Repository must be specified in login_name/repository_name
-         format!).join(' ').light_red
+      message = %w(ERROR: Repository must be specified in
+                   login_name/repository_name format!).join(' ')
+      Pastel.new.decorate message, :bright_red, :bold
     end
   end # class RubyAppUp::CLI
 end # module RubyAppUp
