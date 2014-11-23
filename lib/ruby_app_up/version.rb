@@ -1,3 +1,3 @@
 module RubyAppUp # rubocop:disable Style/Documentation
-  VERSION = '0.0.1'
+  VERSION = '0.1.0'
 end
