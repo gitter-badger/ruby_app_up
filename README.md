@@ -11,7 +11,7 @@ line application presently based on [Thor](http://whatisthor.com).
 
 It will:
 
-* EVENTUALLY clone a Git repo (from a project identifier you **must** specify;
+* Clone a Git repo (from a project identifier you **must** specify;
 * EVENTUALLY allow you to select the branch to clone, using the `--branch` command-line option (defaults to `master`);
 * EVENTUALLY cloning the repo to the subdirectory specified using the `--clone-to` command-line option (defaults to the default that Git uses, which is normally the bare repo name);
 * EVENTUALLY changing to the new project directory;
