@@ -99,7 +99,7 @@ module RubyAppUp
       end # context 'with a repo specifier that is invalid because it'
 
       context 'with a valid repo specifier' do
-        fit 'produces the correct output messages' do
+        it 'produces the correct output messages' do
           dirname = File.expand_path 'rspec-http'
           FileUtils.remove_dir dirname if Dir.exist? dirname
           message = "Found GitHub repo 'jdickey/rspec-http'!\n"

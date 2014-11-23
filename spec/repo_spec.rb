@@ -4,6 +4,12 @@ require 'spec_helper'
 require 'ruby_app_up/repo'
 require_relative 'support/an_invalid_user_name_repo_spec'
 
+def repo_spec_cleanup(repo_name)
+  subdir = File.expand_path CGI.escape(repo_name)
+  FileUtils.remove_dir subdir if Dir.exist? subdir
+  subdir
+end
+
 # Module containing our Gem's logic.
 module RubyAppUp
   describe Repo do
@@ -15,8 +21,11 @@ module RubyAppUp
       let(:obj) { klass.new owner_login, repo_name }
 
       before :each do
-        @subdir = File.expand_path CGI.escape(repo_name)
-        FileUtils.remove_dir @subdir if Dir.exist? @subdir
+        @subdir = repo_spec_cleanup repo_name
+      end
+
+      after :each do
+        repo_spec_cleanup repo_name
       end
 
       context 'with a valid Github login and repo specified' do
