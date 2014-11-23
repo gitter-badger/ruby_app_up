@@ -20,7 +20,7 @@ module RubyAppUp
     private
 
     def parse_repo_spec(repo_spec)
-      user, repo_name = repo_spec.split '/'
+      user, repo_name = repo_spec.to_s.split '/'
       user = user.to_s.strip
       repo_name = repo_name.to_s.strip
       is_valid = user.length.nonzero? && repo_name.length.nonzero?

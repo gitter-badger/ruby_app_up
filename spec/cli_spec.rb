@@ -77,7 +77,7 @@ module RubyAppUp
             expected = 'ERROR: Repository must be specified in' \
               ' login_name/repository_name format!'
             begin
-              CLI.new.init 'whatever'
+              CLI.new.init self # 'whatever'
             rescue Thor::MalformattedArgumentError => e
               expect(e.message).to eq Pastel.new.bright_red.bold(expected)
             end
