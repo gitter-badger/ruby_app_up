@@ -2,40 +2,7 @@
 require 'spec_helper'
 
 require 'ruby_app_up/repo'
-
-shared_examples 'an invalid user name or repo specified' do
-  describe 'it raises an error that is a' do
-    let(:error) do
-      ret = nil
-      begin
-        obj
-      rescue StandardError => e
-        ret = e
-      end
-      ret
-    end
-
-    it 'RubyAppUp::Repo::NotFoundError' do
-      expect(error).to be_a RubyAppUp::Repo::NotFoundError
-    end
-
-    describe 'RubyAppUp::Repo::NotFoundError with the correct' do
-      it 'message' do
-        message = 'Invalid user name or repository specified: ' \
-          "'#{owner_login}/#{repo_name}'"
-        expect(error.message).to eq message
-      end
-
-      it 'user attribute' do
-        expect(error.user).to eq owner_login
-      end
-
-      it 'repo name' do
-        expect(error.repo_name).to eq repo_name
-      end
-    end # describe 'RubyAppUp::Repo::NotFoundError with the correct'
-  end # describe 'it raises an error that is a'
-end # shared_examples 'an invalid user name or repo specified'
+require_relative 'support/an_invalid_user_name_repo_spec'
 
 # Module containing our Gem's logic.
 module RubyAppUp
@@ -47,9 +14,19 @@ module RubyAppUp
     describe :initialize.to_s do
       let(:obj) { klass.new owner_login, repo_name }
 
+      before :each do
+        @subdir = File.expand_path CGI.escape(repo_name)
+        FileUtils.remove_dir @subdir if Dir.exist? @subdir
+      end
+
       context 'with a valid Github login and repo specified' do
         it 'returns an object instance' do
           expect(obj).to be_a klass
+        end
+
+        it 'creates the project directory' do
+          _ = obj
+          expect(Dir.exist? @subdir).to be true
         end
 
         describe 'returns an object instance with the correct' do

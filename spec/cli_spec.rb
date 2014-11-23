@@ -5,6 +5,8 @@ require 'pry'
 require 'ruby_app_up/cli'
 require 'ruby_app_up/colour_scheme'
 
+# require_relative 'support/an_invalid_user_name_repo_spec'
+
 def regexp_safe_for_colour(coloured, base)
   offset = coloured.index base
   ret = '.' * offset
@@ -70,40 +72,40 @@ module RubyAppUp
 
     describe :init.to_s do
       context 'with a repo specifier that is invalid because it' do
-        after :each do
-          begin
-            CLI.new.init @param
-          rescue @error => e
-            match_str = match_for_possibly_coloured_str @message, @text
-            expect(e.message).to match match_str
-          end
-        end
-
         context 'has an invalid format' do
           it 'outputs the correct error message' do
-            @error = Thor::MalformattedArgumentError
-            @text = 'ERROR: Repository must be specified in login_name/' \
-              'repository_name format!'
-            @message = colours.alert @text
-            @param = 'whatever'
+            expected = 'ERROR: Repository must be specified in' \
+              ' login_name/repository_name format!'
+            begin
+              CLI.new.init 'whatever'
+            rescue Thor::MalformattedArgumentError => e
+              expect(e.message).to eq Pastel.new.bright_red.bold(expected)
+            end
           end
         end # context 'has an invalid format'
 
         context 'names an invalid Github user as the repo owner' do
           it 'outputs the correct error message' do
-            @param = 'i_am_nobody/anything'
-            @error = RubyAppUp::Repo::NotFoundError
-            @message = 'Invalid user name or repository specified:' \
-              " 'i_am_nobody/anything'"
+            owner_login = 'i_am_nobody'
+            repo_name = 'anything-at-all'
+            begin
+              CLI.new.init [owner_login, repo_name].join('/')
+            rescue StandardError => error
+              expect(error).to be_a_repo_not_found_error_for owner_login,
+                                                             repo_name
+            end
           end
         end # context 'names an invalid Github user as the repo owner'
       end # context 'with a repo specifier that is invalid because it'
 
       context 'with a valid repo specifier' do
-        it 'produces the correct output messages' do
+        fit 'produces the correct output messages' do
+          dirname = File.expand_path 'rspec-http'
+          FileUtils.remove_dir dirname if Dir.exist? dirname
           message = "Found GitHub repo 'jdickey/rspec-http'!\n"
           expect { CLI.new.init 'jdickey/rspec-http' }.to output(message)
             .to_stdout
+          FileUtils.remove_dir dirname if Dir.exist? dirname
         end
       end # context 'with a valid repo specifier'
     end # describe :init
