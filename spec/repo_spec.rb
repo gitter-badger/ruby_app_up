@@ -49,13 +49,6 @@ module RubyAppUp
         end # describe 'returns an object instance with the correct'
       end # context 'with a valid Github login and repo specified'
 
-      context 'with an invalid Github login specified' do
-        let(:owner_login) { 'nobody_at_this_address' }
-        let(:repo_name) { 'nothing_here' }
-
-        it_behaves_like 'an invalid user name or repo specified'
-      end # context 'with an invalid Github login specified'
-
       context 'with a valid Github login but an invalid repo name specified' do
         let(:owner_login) { 'jdickey' }
         let(:repo_name) { 'nothing_here' }
