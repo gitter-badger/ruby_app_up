@@ -1,4 +1,5 @@
 
+require 'ruby_app_up/cli'
 require 'ruby_app_up/version'
 
 module RubyAppUp # rubocop:disable Style/Documentation

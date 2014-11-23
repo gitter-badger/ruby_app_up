@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Clones a Rails app from a Git repo and gets it set
                           up. Assumes rbenv and a fairly standard Rake setup,
                           including Rails-type database setup.}
-  spec.homepage      = "https://github.com/jdickey"
+  spec.homepage      = "https://github.com/jdickey/ruby_app_up/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -21,10 +21,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'thor'
+  spec.add_dependency 'git'
+  spec.add_dependency 'pastel'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'colorize'
+  spec.add_development_dependency 'pry'
 end
