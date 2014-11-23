@@ -83,19 +83,6 @@ module RubyAppUp
             end
           end
         end # context 'has an invalid format'
-
-        context 'names an invalid Github user as the repo owner' do
-          it 'outputs the correct error message' do
-            owner_login = 'i_am_nobody'
-            repo_name = 'anything-at-all'
-            begin
-              CLI.new.init [owner_login, repo_name].join('/')
-            rescue StandardError => error
-              expect(error).to be_a_repo_not_found_error_for owner_login,
-                                                             repo_name
-            end
-          end
-        end # context 'names an invalid Github user as the repo owner'
       end # context 'with a repo specifier that is invalid because it'
 
       context 'with a valid repo specifier' do
