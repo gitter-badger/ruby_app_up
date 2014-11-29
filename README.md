@@ -1,4 +1,5 @@
 # `ruby_app_up`
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/jdickey/ruby_app_up?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![GitHub version](https://badge.fury.io/gh/jdickey%2Fruby_app_up.svg)](http://badge.fury.io/gh/jdickey%2Fruby_app_up)
 [ ![Codeship Status for jdickey/ruby_app_up](https://codeship.com/projects/ce8a39d0-536d-0132-1cc6-5e1d8dbac3c9/status)](https://codeship.com/projects/48939)
